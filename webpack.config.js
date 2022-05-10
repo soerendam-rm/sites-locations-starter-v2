@@ -6,17 +6,29 @@ module.exports = {
   plugins: [new MiniCssExtractPlugin()],
   entry: {
     main: "./src/main.js",
-    locator: "./src/locator.ts"
+    locator: "./src/locator.ts",
+    analytics: "./src/analytics.js",
+    util: "./src/util.js"
   },
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "assets"),
     clean: true,
   },
+  devtool: 'source-map',
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    port: 3000,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
+  },
   resolve: {
     extensions: [".ts", ".js", ".json"],
   },
-  devtool: "inline-source-map",
   module: {
     rules: [
       {
@@ -27,7 +39,12 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: [{
+          loader: 'ts-loader',
+          options: {
+            configFile: "tsconfig.json"
+          }
+        }],
         exclude: /node_modules/,
       },
       {

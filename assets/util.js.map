@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://sites-locations-starter/./src/util.js"],"names":["window","isStaging","location","href","indexOf"],"mappings":"AAAAA,OAAOC,UAAY,WACf,OAAOD,OAAOE,SAASC,KAAKC,QAAQ,yBAA2B","file":"util.js","sourcesContent":["window.isStaging = () => {\n    return window.location.href.indexOf('preview.pagescdn.com') > -1;\n};"],"sourceRoot":""}

@@ -1,2 +1,47 @@
-window.trackAnalytics=function(e,t,n){if(!isStaging()){var o=function(e){e.v=Date.now()+Math.floor(1e3*Math.random());var t="//www.yext-pixel.com/store_pagespixel?product=sites";for(var n in e)e.hasOwnProperty(n)&&e[n]&&(t+="&".concat(n,"=").concat(encodeURIComponent(e[n])));return t}({pagesReferrer:window.document.referrer,pageurl:window.location.pathname,eventType:"pageview",businessids:e,siteId:t,ids:n}),i=document.createElement("img");i.src=o,i.style.width="0",i.style.height="0",i.style.position="absolute",i.alt="",document.body.appendChild(i)}};
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!**************************!*\
+  !*** ./src/analytics.js ***!
+  \**************************/
+function seed() {
+  return Date.now() + Math.floor(1000 * Math.random());
+}
+
+function pixelURL(data) {
+  data.v = seed();
+  var p = '//www.yext-pixel.com/store_pagespixel?product=sites';
+
+  for (var key in data) {
+    if (data.hasOwnProperty(key) && !!data[key]) {
+      p += "&".concat(key, "=").concat(encodeURIComponent(data[key]));
+    }
+  }
+
+  return p;
+}
+
+window.trackAnalytics = function (businessId, siteId, entityId) {
+  if (isStaging()) {
+    return;
+  }
+
+  var jsonData = {
+    'pagesReferrer': window.document.referrer,
+    'pageurl': window.location.pathname,
+    'eventType': "pageview",
+    'businessids': businessId,
+    'siteId': siteId,
+    'ids': entityId
+  };
+  var pixel = pixelURL(jsonData);
+  var px = document.createElement("img");
+  px.src = pixel;
+  px.style.width = '0';
+  px.style.height = '0';
+  px.style.position = 'absolute';
+  px.alt = '';
+  document.body.appendChild(px);
+};
+/******/ })()
+;
 //# sourceMappingURL=analytics.js.map
